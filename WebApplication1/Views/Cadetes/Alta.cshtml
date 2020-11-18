@@ -1,0 +1,40 @@
+﻿@model Cadeteria.Entidades.Cadete
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" asp-area="" asp-controller="Cadetes" asp-action="Index">Buscar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Cadetes" asp-action="Alta">Nuevo Cadete</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Alguna otra opcion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-9">
+            <h1>Dar de alta un nuevo cadete</h1>
+
+            <form asp-controller="Cadetes" asp-action="NuevoCadete" method="post">
+
+                <div class="form-group">
+                    <label asp-for="Nombre">Nombre del Cadete:</label>
+                    <input type="text" class="form-control" id="Nombre" asp-for="Nombre" placeholder="Juan Perez">
+                    <label asp-for="Telefono">Telefono:</label>
+                    <input type="text" class="form-control" id="Telefono" asp-for="Telefono" placeholder="38100000">
+                    <label asp-for="Direccion">Dirección:</label>   
+                    <input type="text" class="form-control" id="Direccion" asp-for="Direccion" placeholder="Independencia 000">
+                </div>
+                <button type="submit" class="btn btn-primary">Cargar</button>
+                <button type="reset" class="btn btn-secondary">Limpiar</button>
+            </form>
+            
+        </div>
+    </div>
+</div>

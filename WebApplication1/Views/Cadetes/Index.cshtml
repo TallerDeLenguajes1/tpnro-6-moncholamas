@@ -1,0 +1,74 @@
+﻿
+
+ @model List<Cadeteria.VIewModels.CadeteViewModel>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" asp-area="" asp-controller="Cadetes" asp-action="Index">Buscar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Cadetes" asp-action="Alta">Nuevo Cadete</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Alguna otra opcion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-9">
+            <h1>Bienvenido a la sección de cadetes</h1>
+
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Buscar Cadete:</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Juan Perez">
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+            <div>
+                <h2>Últimos 3 cadetes cargados</h2>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Borrar</th>
+                    </tr>                
+                </thead> 
+                <tbody>
+                    
+                        @{
+
+                            foreach (var cad in Model)
+                            {<tr>
+                                                         <form asp-controller="Cadetes" asp-action="Borrar" method="get">
+                                                             <input type="text" name="ID" value="@cad.IdCad" hidden/>
+                                                             <td scope="col">@cad.IdCad</td>
+                                                             <td scope="col"> @cad.Nombre </td>
+                                                             <td scope="col"> @cad.Telefono </td>
+                                                             <td scope="col"> @cad.Direccion </td>
+                                                             <td scope="col">Borrar</td>
+                                                             <td scope="col"> <button type="submit" class="btn btn-primary">Borrar</button>  </td>
+                                                         </form>
+                            </tr>
+                            }
+
+                        }
+                    
+                </tbody>
+            </table>
+            
+
+        </div>
+    </div>
+</div>
