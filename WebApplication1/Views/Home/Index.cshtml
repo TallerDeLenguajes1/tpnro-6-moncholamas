@@ -1,15 +1,39 @@
-﻿@model List<Cadeteria.Entidades.Cadete>
-    <div class="container">
-        <div class="row">
-            <div class="col-3">
+﻿@model Cadeteria.VIewModels.HomeAdminViewModel
 
-                <div class="alert alert-info" role="alert">
-                    Submenu
+@{
+    @if (@Model != null)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+
+                    <div class="alert alert-info" role="alert">
+                        <span>Submenu ADMINISTRADOR</span>
+                        <a asp-action="Logout" asp-controller="login" class="btn-danger">Cerrar Sesión</a>
+                    </div>
+
                 </div>
+                <div class="col-9">
 
-            </div>
-            <div class="col-9">
-                <h1>Bienvenidx a CadeteriaML</h1>
+                    <h1>Bienvenidx a CadeteriaML</h1>
+                    <p>Bienvenido: @Model.Nombre esta logueado actualmente como administrador</p>
+
+                    @foreach (var pedidos in Model.pedidosPendientes)
+                    {
+                        <p>@pedidos.Observacion</p>
+                    }
+
+                    
+
+
+                </div>
             </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <h1> Bienvenido, puede iniciar sesión para empezar!</h1>
+    }
+
+
+}

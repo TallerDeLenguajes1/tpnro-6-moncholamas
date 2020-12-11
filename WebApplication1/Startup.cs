@@ -24,10 +24,17 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(Cadeteria.PerfilDeMapeo));
 
             services.AddControllersWithViews();
-
+            services.AddDistributedMemoryCache();
+            services.AddSession(
+                options =>
+                {
+                    options.Cookie.Name = "CookieMoncho";
+                    options.IdleTimeout = TimeSpan.FromSeconds(200);
+                }
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +56,8 @@ namespace WebApplication1
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

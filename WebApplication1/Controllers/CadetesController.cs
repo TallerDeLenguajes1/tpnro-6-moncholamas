@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Cadeteria.Entidades;
+using Cadeteria.Logueo;
 using Cadeteria.Models;
 using Cadeteria.VIewModels;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cadeteria.Controllers
 {
-    public class CadetesController : Controller
+    public class CadetesController : BaseController
     {
         //Inyecto la dependencia    
         private readonly IMapper _mapper;
@@ -23,20 +24,32 @@ namespace Cadeteria.Controllers
         // GET: CadetesController
         public ActionResult Index()
         {
-            RepositorioCadetes ReCad = new RepositorioCadetes();
-            List<Cadete> listaC = ReCad.getAll();
-
-          
-            List<CadeteViewModel> ListaCadVM = _mapper.Map<List<CadeteViewModel>>(listaC);
-            return View(ListaCadVM);
+            if (SesionIniciada())
+            {
+                var ReCad = new RepositorioCadetes();
+                List<Cadete> listaC = ReCad.getAll();
+                List<CadeteViewModel> ListaCadVM = _mapper.Map<List<CadeteViewModel>>(listaC);
+                var Modelo = new AdminCadeteViewModel
+                {
+                    NombreUsuario = HttpContext.Session.GetString("Nombre"),
+                    ListaCadetes = ListaCadVM
+                };
+                return View(Modelo);
+            }
+            return View();
         }
 
         [HttpPost]
-        public ActionResult NuevoCadete(Cadete cadete)
+        public ActionResult NuevoCadete(CadeteViewModel cadete)
         {
-            RepositorioCadetes ReCad = new RepositorioCadetes();
-            ReCad.altaCadete(cadete);
-            return View();
+            if (ModelState.IsValid)
+            {
+                var cadeteDTO = _mapper.Map<CadeteViewModel, Cadete>(cadete); 
+                RepositorioCadetes ReCad = new RepositorioCadetes();
+                ReCad.altaCadete(cadeteDTO);
+                return Redirect("index");
+            }
+            return Redirect("Alta");
         }
 
         // GET: CadetesController/Alta

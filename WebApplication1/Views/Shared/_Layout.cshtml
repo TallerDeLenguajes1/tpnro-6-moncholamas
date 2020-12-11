@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - CadeteriaML</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("styles", required:false);
 </head>
 <body>
     <header>
@@ -26,12 +27,15 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Cadetes" asp-action="Index">Cadetes</a>
-                        </li>+
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Pedidos" asp-action="Index">Pedidos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Index">Ingresar</a>
                         </li>
                     </ul>
                 </div>

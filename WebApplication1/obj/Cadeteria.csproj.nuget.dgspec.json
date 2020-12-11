@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\MONCHO\\MONCHO\\PROGRAMADOR\\TALLER_2\\TP_6\\WebApplication1\\Cadeteria.csproj": {}
+    "C:\\Users\\Longyear 44\\source\\repos\\tpnro-6-moncholamas\\WebApplication1\\Cadeteria.csproj": {}
   },
   "projects": {
-    "E:\\MONCHO\\MONCHO\\PROGRAMADOR\\TALLER_2\\TP_6\\WebApplication1\\Cadeteria.csproj": {
+    "C:\\Users\\Longyear 44\\source\\repos\\tpnro-6-moncholamas\\WebApplication1\\Cadeteria.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\MONCHO\\MONCHO\\PROGRAMADOR\\TALLER_2\\TP_6\\WebApplication1\\Cadeteria.csproj",
+        "projectUniqueName": "C:\\Users\\Longyear 44\\source\\repos\\tpnro-6-moncholamas\\WebApplication1\\Cadeteria.csproj",
         "projectName": "Cadeteria",
-        "projectPath": "E:\\MONCHO\\MONCHO\\PROGRAMADOR\\TALLER_2\\TP_6\\WebApplication1\\Cadeteria.csproj",
-        "packagesPath": "C:\\Users\\Eloy\\.nuget\\packages\\",
-        "outputPath": "E:\\MONCHO\\MONCHO\\PROGRAMADOR\\TALLER_2\\TP_6\\WebApplication1\\obj\\",
+        "projectPath": "C:\\Users\\Longyear 44\\source\\repos\\tpnro-6-moncholamas\\WebApplication1\\Cadeteria.csproj",
+        "packagesPath": "C:\\Users\\Longyear 44\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Longyear 44\\source\\repos\\tpnro-6-moncholamas\\WebApplication1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Eloy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Longyear 44\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "AutoMapper": {
               "target": "Package",
@@ -45,6 +47,10 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[8.1.0, )"
+            },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "System.Data.SQLite": {
               "target": "Package",
@@ -73,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
