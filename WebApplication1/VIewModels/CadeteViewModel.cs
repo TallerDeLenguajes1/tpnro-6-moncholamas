@@ -25,4 +25,18 @@ namespace Cadeteria.VIewModels
         
         public List<CadeteViewModel> ListaCadetes { get; set; }
     }
+    public class AltaCadeteViewModel
+    {
+        [Required]
+        public string Nombre { get; set; }
+        [Required]
+        public string Telefono { get; set; }
+        [Required]
+        public string Direccion { get; set; }
+        [Required]
+        public string Usuario { get; set; }
+        [Required]
+        public string Clave { get; set; }
+
+    }
 }

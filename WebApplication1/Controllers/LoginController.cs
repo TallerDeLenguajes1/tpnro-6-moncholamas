@@ -24,6 +24,10 @@ namespace Cadeteria.Controllers
 
         public ActionResult Index()
         {
+            if (SesionIniciada())
+            {
+                return RedirectToAction("index", "Home");
+            }
             return View();
         }
 
@@ -32,26 +36,21 @@ namespace Cadeteria.Controllers
         public ActionResult Ingresar(LoginViewModel us)
         {
 
-            Usuario usuario = _mapper.Map<Usuario>(us);
+            
 
             if (ModelState.IsValid)
             {
+                Usuario usuario = _mapper.Map<Usuario>(us);
                 var repoU = new RepositorioUsuarios();
-                if (repoU.Verificar(usuario))
+                var UsuarioValidado = repoU.Verificar(usuario);
+                if (UsuarioValidado!=null)
                 {
-                    IniciarSesion(usuario);
-                    return RedirectToAction("index", "Home");
+                    IniciarSesion(UsuarioValidado);
                 }
-                else
-                {
-                    return Redirect("index");
-                }
-            }
-            else
-            {
-                return Redirect("index");
             }
 
+            return RedirectToAction("index", "Home");
+            
         }
 
                        

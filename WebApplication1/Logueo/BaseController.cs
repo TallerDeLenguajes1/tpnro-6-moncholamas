@@ -1,4 +1,5 @@
 ﻿using Cadeteria.Entidades;
+using Cadeteria.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,7 +20,11 @@ namespace Cadeteria.Logueo
 
         internal void IniciarSesion(Usuario us) {
             HttpContext.Session.SetString("Nombre",us.Nombre);
+            HttpContext.Session.SetInt32("Id", us.Id);
             HttpContext.Session.SetInt32("Rol", us.Rol);
+            // si el usuario existe traigo sus datos de la BD
+
+        
             //acomodar la BD para tener roles numerados
             //HttpContext.Session.SetInt32("Rol", us.Id);
         }

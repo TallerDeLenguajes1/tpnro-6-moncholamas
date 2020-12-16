@@ -7,6 +7,7 @@ namespace Cadeteria.VIewModels
 {
     public class HomeAdminViewModel
     {
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public int Rol { get; set; }
         // public pedidos sin atender

@@ -29,6 +29,7 @@ namespace Cadeteria.Entidades
         public string Nombre { get; set; }
         public string Direccion { get; set; }
         public string Telefono { get; set; }
+        public int IdVehiculo { get; set; }
         public Cadete() { }
         public Cadete(string nom, string dir, string tel)
         {

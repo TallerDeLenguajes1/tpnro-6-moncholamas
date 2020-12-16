@@ -25,7 +25,7 @@ namespace Cadeteria.Models
 
             //comando sql
             var command = conecSQL.CreateCommand();
-            command.CommandText = "Select * from Cadetes LIMIT 3";
+            command.CommandText = "Select * from Cadetes ORDER BY idCadete DESC LIMIT 3";
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -35,28 +35,49 @@ namespace Cadeteria.Models
                 cadete.Nombre = (reader["nombre"]).ToString();
                 cadete.Telefono = reader["telefono"].ToString();
                 cadete.Direccion = reader["Direccion"].ToString();
+                cadete.IdVehiculo = Convert.ToInt32( reader["IdVehiculo"]);
                 listaCadetes.Add(cadete);
             }
             conecSQL.Close();
             return listaCadetes;
         }
 
-        public void altaCadete(Cadete cadeteN)
+        public void altaCadete(Cadete cadeteN, Usuario usuarioN)
         {
-            var cadena = "Data Source= " + Path.Combine(Directory.GetCurrentDirectory(), "DB\\Cadeteria.db");
-            var conecSQL = new SQLiteConnection(cadena);
-            conecSQL.Open();
+            
+                var cadena = "Data Source= " + Path.Combine(Directory.GetCurrentDirectory(), "DB\\Cadeteria.db");
+                var conecSQL = new SQLiteConnection(cadena);
+                conecSQL.Open();
 
-            var command = conecSQL.CreateCommand();
-            command.CommandText = "INSERT INTO Cadetes(nombre,telefono,Direccion) " +
-                                  " VALUES(@Nombre,@Telefono,@Direccion) ";
+                var command1 = conecSQL.CreateCommand();
+                command1.CommandText = "INSERT INTO Usuarios(Nombre,Password,Rol) " +
+                                      " VALUES(@N,@P,@R) ";
 
-            command.Parameters.AddWithValue("@Nombre", cadeteN.Nombre);
-            command.Parameters.AddWithValue("@Telefono", cadeteN.Telefono);
-            command.Parameters.AddWithValue("@Direccion", cadeteN.Direccion);
+                command1.Parameters.AddWithValue("@N", usuarioN.Nombre);
+                command1.Parameters.AddWithValue("@P", usuarioN.Clave);
+                command1.Parameters.AddWithValue("@R", 2);
 
-            command.ExecuteNonQuery();
-            conecSQL.Close();
+
+
+                command1.ExecuteNonQuery();
+                
+                var RepoU = new RepositorioUsuarios();
+                int idRol = RepoU.UltimoUsuarioCargado();
+                var command = conecSQL.CreateCommand();
+                command.CommandText = "INSERT INTO Cadetes(nombre,telefono,Direccion,IdRol) " +
+                                      " VALUES(@Nombre,@Telefono,@Direccion,@Rol) ";
+
+                command.Parameters.AddWithValue("@Nombre", cadeteN.Nombre);
+                command.Parameters.AddWithValue("@Telefono", cadeteN.Telefono);
+                command.Parameters.AddWithValue("@Direccion", cadeteN.Direccion);
+                command.Parameters.AddWithValue("@Rol", idRol);
+
+                command.ExecuteNonQuery();
+                conecSQL.Close();
+            
+            
+
+            
         }
 
         public void borrarCadete(int id)
@@ -70,10 +91,32 @@ namespace Cadeteria.Models
             command.ExecuteNonQuery();
         }
 
-        public void InfoCadete(int id)
-        {
-            //muestra la informacion del cadete y los pedidos que hizo
-        }
+       
 
+        public Cadete UltimoCadeteCargado()
+        {
+            
+            var cadete = new Cadete();
+
+            var cadena = "Data Source= " + Path.Combine(Directory.GetCurrentDirectory(), "DB\\Cadeteria.db");
+            var conecSQL = new SQLiteConnection(cadena);
+            conecSQL.Open();
+
+            //comando sql
+            var command = conecSQL.CreateCommand();
+            command.CommandText = "Select * from Cadetes ORDER BY idCadete DESC LIMIT 1";
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                cadete.IdCad = Convert.ToInt32(reader["idCadete"]);
+                cadete.Nombre = (reader["nombre"]).ToString();
+                cadete.Telefono = reader["telefono"].ToString();
+                cadete.Direccion = reader["Direccion"].ToString();
+                cadete.IdVehiculo = Convert.ToInt32(reader["IdVehiculo"]);
+            }
+            conecSQL.Close();
+            return cadete;
+        }
     }
 }

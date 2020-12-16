@@ -14,10 +14,10 @@
                     <a class="nav-link" asp-area="" asp-controller="Cadetes" asp-action="Alta">Nuevo Cadete</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Alguna otra opcion</a>
+                    <a class="nav-link" asp-controller="Cadetes" asp-action="AsignarVehiculo">Asignar Vehiculo</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
+                    <a class="nav-link" asp-controller="Cadetes" asp-action="ModificarCadete">Modificar Datos</a>
                 </li>
             </ul>
         </div>
@@ -44,7 +44,8 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Telefono</th>
                             <th scope="col">Dirección</th>
-                            <th scope="col">Editar</th>
+                            <th scope="col">Vehiculo</th>
+                            <th scope="col">Modificar</th>
                             <th scope="col">Borrar</th>
                         </tr>
                     </thead>
@@ -54,17 +55,24 @@
 
                             foreach (var cad in @Model.ListaCadetes)
                             {
-                                <tr>
-                                    <form asp-controller="Cadetes" asp-action="Borrar" method="get">
-                                        <input type="text" name="ID" value="@cad.IdCad" hidden />
-                                        <td scope="col">@cad.IdCad</td>
-                                        <td scope="col"> @cad.Nombre </td>
-                                        <td scope="col"> @cad.Telefono </td>
-                                        <td scope="col"> @cad.Direccion </td>
-                                        <td scope="col">Borrar</td>
-                                        <td scope="col"> <button type="submit" class="btn btn-primary">Borrar</button>  </td>
-                                    </form>
-                                </tr>
+                                                <tr>
+
+                                                    <td scope="col">@cad.IdCad</td>
+                                                    <td scope="col"> @cad.Nombre </td>
+                                                    <td scope="col"> @cad.Telefono </td>
+                                                    <td scope="col"> @cad.Direccion </td>
+
+                                                    @if (cad.IdVehiculo == 0)
+                                                    {
+                                                        <td scope="col"> <button asp-action="" asp-controller="" class="btn btn-success">Asignar</button></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td scope="col"> - </td>
+                                                    }
+                                                    <td scope="col"> <button asp-action="" asp-controller="" class="btn btn-secondary">Editar</button>  </td>
+                                                    <td scope="col"> <button asp-action="" asp-controller="" class="btn btn-danger">Borrar</button>  </td>
+                                                </tr>
                             }
 
                         }

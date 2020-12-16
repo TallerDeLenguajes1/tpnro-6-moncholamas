@@ -40,13 +40,14 @@ namespace Cadeteria.Controllers
         }
 
         [HttpPost]
-        public ActionResult NuevoCadete(CadeteViewModel cadete)
+        public ActionResult NuevoCadete(AltaCadeteViewModel cadete)
         {
             if (ModelState.IsValid)
             {
-                var cadeteDTO = _mapper.Map<CadeteViewModel, Cadete>(cadete); 
+                var cadeteDTO = _mapper.Map<AltaCadeteViewModel, Cadete>(cadete);
+                var usuarioDTO = _mapper.Map<AltaCadeteViewModel,Usuario>(cadete);
                 RepositorioCadetes ReCad = new RepositorioCadetes();
-                ReCad.altaCadete(cadeteDTO);
+                ReCad.altaCadete(cadeteDTO,usuarioDTO);
                 return Redirect("index");
             }
             return Redirect("Alta");
@@ -64,26 +65,19 @@ namespace Cadeteria.Controllers
             return View();
         }
 
-        public ActionResult Informacion(int id)
+        public ActionResult ModificarCadete(int id)
         {
-            RepositorioCadetes ReCad = new RepositorioCadetes();
-            ReCad.InfoCadete(id);
+            //RepositorioCadetes ReCad = new RepositorioCadetes();
+            //ReCad.InfoCadete(id);
             return View();
         }
 
-        // POST: CadetesController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        
+        public ActionResult AsignarVehiculo()
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+           
                 return View();
-            }
+            
         }
 
         // GET: CadetesController/Edit/5

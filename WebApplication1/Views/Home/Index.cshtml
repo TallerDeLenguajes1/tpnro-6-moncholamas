@@ -1,15 +1,17 @@
 ﻿@model Cadeteria.VIewModels.HomeAdminViewModel
 
 @{
-    @if (@Model != null)
+    @if (@Model!=null)
     {
+        @if (@Model.Rol ==1)
+        {               
         <div class="container">
             <div class="row">
                 <div class="col-3">
 
                     <div class="alert alert-info" role="alert">
                         <span>Submenu ADMINISTRADOR</span>
-                        <a asp-action="Logout" asp-controller="login" class="btn-danger">Cerrar Sesión</a>
+                        <a asp-action="Logout" asp-controller="login" class="btn btn-danger">Cerrar Sesión</a>
                     </div>
 
                 </div>
@@ -17,18 +19,21 @@
 
                     <h1>Bienvenidx a CadeteriaML</h1>
                     <p>Bienvenido: @Model.Nombre esta logueado actualmente como administrador</p>
+                    <p>Rol: @Model.Rol esta logueado actualmente como administrador</p>
+                    <p>Id: @Model.Id esta logueado actualmente como administrador</p>
 
                     @foreach (var pedidos in Model.pedidosPendientes)
                     {
                         <p>@pedidos.Observacion</p>
                     }
 
-                    
+
 
 
                 </div>
             </div>
         </div>
+        }
     }
     else
     {

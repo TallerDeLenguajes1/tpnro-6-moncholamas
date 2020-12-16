@@ -8,12 +8,13 @@ namespace Cadeteria.VIewModels
 {
     public class LoginViewModel
     {
+        
+        [MinLength(2)]
+        [Required (ErrorMessage = "Campo Obligatorio")]
+        public string Nombre { get; set; }
         [Required]
         [MinLength(2)]
-        public string nombre { get; set; }
-        [Required]
-        [MinLength(2)]
-        public string clave { get; set; }
+        public string Clave { get; set; }
         public int Rol { get; set; }
     }
 }

@@ -46,6 +46,8 @@ namespace WebApplication1.Controllers
 
                 var Model = new HomeAdminViewModel {
                     Nombre = HttpContext.Session.GetString("Nombre"),
+                    Id = Convert.ToInt32(HttpContext.Session.GetInt32("Id")),
+                    Rol = Convert.ToInt32(HttpContext.Session.GetInt32("Rol")),
                     ultimosClientes = listCliVM,
                     pedidosPendientes = listPedVM,
                     cadetesSinPedido = listCadVM

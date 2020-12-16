@@ -29,12 +29,12 @@ namespace Cadeteria.Models
             while (reader.Read())
             {
                 var pedido = new Pedido();
-                pedido.Nro = Convert.ToInt32(reader["Nro"]);
+                pedido.Nro = Convert.ToInt32(reader["Id"]);
                 pedido.Observacion = (reader["Observacion"]).ToString();
                 pedido.Estado = reader["Estado"].ToString();
                 pedido.TipoPedido = reader["TipoPedido"].ToString();
                 pedido.Costo = Convert.ToDouble(reader["Costo"]);
-                pedido.IdCli = Convert.ToInt32(reader["idCli"]);
+                pedido.IdCli = Convert.ToInt32(reader["idCliente"]);
                 if (reader["IdCadete"].Equals(null))
                 {
                     pedido.IdCadete = Convert.ToInt32(reader["IdCadete"]);

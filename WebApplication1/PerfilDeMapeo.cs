@@ -23,6 +23,12 @@ namespace Cadeteria
             CreateMap<Cliente, ClienteViewModel>().ReverseMap();
             CreateMap<Pedido, PedidoViewModel>().ReverseMap();
 
+            CreateMap<AltaCadeteViewModel, Cadete>();
+
+            CreateMap<AltaCadeteViewModel, Usuario>();
+
+
+
             CreateMap<Usuario, HomeAdminViewModel>()
                 .ForMember(dest => dest.Nombre, origen => origen.MapFrom(src => src.Nombre))
                 .ForMember(dest => dest.Rol, origen => origen.MapFrom(src => src.Rol));
