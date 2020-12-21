@@ -7,44 +7,26 @@ namespace Cadeteria.Entidades
 {
     public class Vehiculo
     {
-        protected string Tipo { get; set; }
-        public long Matricula { get; set; }
-        public Vehiculo(long matr) {
-            Matricula = matr;
-        }
-        public virtual  double plus() {
-            return 1;
-        }
-    }
-    class Moto : Vehiculo
-    {
-        public Moto(long mat) : base(mat) {
-            Tipo = "Moto";
-        }
-        public override double plus()
+        public int IdVehiculo { get; set; }
+        public string Matricula { get; set; }
+        public string Tipo { get; set; }
+
+        public double plus(double precioBase)
         {
-            return 1.20;
+            switch (Tipo)
+            {
+                case "Auto":
+                    return precioBase * 1.25;
+                case "Moto":
+                    return precioBase * 1.20;
+                case "Bicicleta":
+                    return precioBase * 1.05;
+                default:
+                    return precioBase;
+                    break;
+            }
         }
 
     }
-    class Auto : Vehiculo
-    {
-        public Auto(long mat) : base(mat) {
-            Tipo = "Auto";
-        }
-        public override double plus()
-        {
-            return 1.25;
-        }
-    }
-    class Bicicleta : Vehiculo
-    {
-        public Bicicleta(long mat) : base(mat) {
-            Tipo = "Bicicleta";
-        }
-        public override double plus()
-        {
-            return 1.05;
-        }
-    }
+    
 }

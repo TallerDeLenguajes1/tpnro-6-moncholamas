@@ -1,87 +1,102 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Cadetes";
+}
 
- @model Cadeteria.VIewModels.AdminCadeteViewModel
+@model Cadeteria.VIewModels.AdminCadeteViewModel
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-3">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" asp-area="" asp-controller="Cadetes" asp-action="Index">Buscar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Cadetes" asp-action="Alta">Nuevo Cadete</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Cadetes" asp-action="AsignarVehiculo">Asignar Vehiculo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Cadetes" asp-action="ModificarCadete">Modificar Datos</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-9">
-            <h1>Bienvenido a la sección de cadetes</h1>
 
-            @if (@Model != null)
-            {
 
-                <form>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Buscar Cadete:</label>
-                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Juan Perez">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Buscar</button>
-                </form>
-                <div>
-                    <h2>Últimos 3 cadetes cargados</h2>
+@if (@Model != null)
+{
+    @if (@Model.IdRol == 1)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-area="" asp-controller="Cadetes" asp-action="Index">Ultimos Cargados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Cadetes" asp-action="Alta">Nuevo Cadete</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Cadetes" asp-action="ModificarCadete">Modificar Datos</a>
+                        </li>
+                    </ul>
                 </div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Telefono</th>
-                            <th scope="col">Dirección</th>
-                            <th scope="col">Vehiculo</th>
-                            <th scope="col">Modificar</th>
-                            <th scope="col">Borrar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="col-9">
+                    <h1>@ViewData["Title"]</h1>
 
-                        @{
+                    <div>
+                        <h2>Últimos 5 cargados</h2>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Teléfono</th>
+                                <th scope="col">Dirección</th>
+                                <th scope="col">Vehiculo</th>
+                                <th scope="col">Modificar</th>
+                                <th scope="col">Borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                            foreach (var cad in @Model.ListaCadetes)
-                            {
-                                                <tr>
+                            @{
 
-                                                    <td scope="col">@cad.IdCad</td>
-                                                    <td scope="col"> @cad.Nombre </td>
-                                                    <td scope="col"> @cad.Telefono </td>
-                                                    <td scope="col"> @cad.Direccion </td>
+                                foreach (var cad in @Model.ListaCadetes)
+                                {
+                                    <tr>
 
-                                                    @if (cad.IdVehiculo == 0)
-                                                    {
-                                                        <td scope="col"> <button asp-action="" asp-controller="" class="btn btn-success">Asignar</button></td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td scope="col"> - </td>
-                                                    }
-                                                    <td scope="col"> <button asp-action="" asp-controller="" class="btn btn-secondary">Editar</button>  </td>
-                                                    <td scope="col"> <button asp-action="" asp-controller="" class="btn btn-danger">Borrar</button>  </td>
-                                                </tr>
+                                        
+                                        <td scope="col"> @cad.Nombre </td>
+                                        <td scope="col"> @cad.Telefono </td>
+                                        <td scope="col"> @cad.Direccion </td>
+
+                                        @if (cad.IdVehiculo == 0)
+                                        {
+                                            <td scope="col"> <a asp-action="AsignarVehiculo" asp-controller="Cadete" name="Id" asp-route-id="@cad.IdCad" class="btn btn-success">Asignar</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td scope="col"> - </td>
+                                        }
+                                        <td scope="col"> <a asp-action="" asp-controller="" class="btn btn-secondary">Editar</a>  </td>
+                                        <td scope="col"> <a asp-action="Borrar" asp-controller="Cadetes" asp-route-id="@cad.IdCad" class="btn btn-danger">Borrar</a>  </td>
+                                    </tr>
+                                }
+
                             }
 
-                        }
-
-                    </tbody>
-                </table>
-            }
+                        </tbody>
+                    </table>
 
 
+
+                </div>
+            </div>
         </div>
+    }
+
+
+}
+else
+{
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <p>
+            En esta sección podrá obtener información detallada de
+            los empleados con los que está trabajando, gestionar sus pedidos, dar de alta nuevos trabajores
+            o dar de baja los ya existentes.
+        </p>
+        <p>Para comenzar puede <a asp-action="Index" asp-controller="Login">iniciar sesión</a>.</p>
     </div>
-</div>
+
+
+
+}

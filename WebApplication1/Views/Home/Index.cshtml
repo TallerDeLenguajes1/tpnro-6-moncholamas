@@ -1,43 +1,78 @@
 ﻿@model Cadeteria.VIewModels.HomeAdminViewModel
+@{
+    ViewData["Title"] = "Inicio";
+}
 
 @{
-    @if (@Model!=null)
+    @if (@Model != null)
     {
-        @if (@Model.Rol ==1)
-        {               
-        <div class="container">
-            <div class="row">
-                <div class="col-3">
+        @if (@Model.Rol == 1)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
 
-                    <div class="alert alert-info" role="alert">
-                        <span>Submenu ADMINISTRADOR</span>
-                        <a asp-action="Logout" asp-controller="login" class="btn btn-danger">Cerrar Sesión</a>
+                        <h1>Bienvenidx a CadeteriaML</h1>
+                        <p>Bienvenido: @Model.Nombre esta logueado actualmente como administrador</p>
+                        <a asp-action="Logout" asp-controller="login" class="btn btn-danger btn-lg">Cerrar Sesión</a>
+
+
                     </div>
-
-                </div>
-                <div class="col-9">
-
-                    <h1>Bienvenidx a CadeteriaML</h1>
-                    <p>Bienvenido: @Model.Nombre esta logueado actualmente como administrador</p>
-                    <p>Rol: @Model.Rol esta logueado actualmente como administrador</p>
-                    <p>Id: @Model.Id esta logueado actualmente como administrador</p>
-
-                    @foreach (var pedidos in Model.pedidosPendientes)
-                    {
-                        <p>@pedidos.Observacion</p>
-                    }
-
-
-
-
                 </div>
             </div>
-        </div>
         }
     }
     else
     {
-        <h1> Bienvenido, puede iniciar sesión para empezar!</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div>
+                    <h1> Bienvenido</h1>
+                    <p> Inicie sesión para poder detallar, dar de alta, trabajar o gestionar:</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="card">
+                        <img class="card-img-top" src="./img/cadete.jpg" alt="Alternate Text" />
+                        <div class="card-body">
+                            <h5 class="card-title">Cadetes</h5>
+                            <p class="card-text">Gestione las personas que trabajan actualmente con usted, los vehiculos empleados y los pedidos que realizan.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <img class="card-img-top" src="./img/cliente.jpg" alt="Alternate Text" />
+                        <div class="card-body">
+                            <h5 class="card-title">Clientes</h5>
+                            <p class="card-text">Revise y actualize los clientes que tiene actualmente en su negocio. </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <img class="card-img-top" src="~/img/pedido.jpg" alt="Alternate Text" />
+                        <div class="card-body">
+                            <h5 class="card-title">Pedidos</h5>
+                            <p class="card-text">Controle los estados de los envios y otros detalles que le permitan tener un seguimiento 
+                            permanente de sus productos.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <br />
+                        <a type="button" class="btn btn-success btn-lg " asp-action="Index" asp-controller="Login">Iniciar Sesión</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     }
 
 

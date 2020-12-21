@@ -5,13 +5,10 @@
         <div class="col-3">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" asp-area="" asp-controller="Cadetes" asp-action="Index">Buscar</a>
+                    <a class="nav-link active" asp-area="" asp-controller="Cadetes" asp-action="Index">Ultimos Cargados</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Cadetes" asp-action="Alta">Nuevo Cadete</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Cadetes" asp-action="AsignarVehiculo">Asignar Vehiculo</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Cadetes" asp-action="ModificarCadete">Modificar Datos</a>
@@ -32,17 +29,9 @@
                     <label asp-for="Direccion">Dirección:</label>   
                     <input type="text" class="form-control" id="Direccion" asp-for="Direccion" placeholder="Independencia 000">
                 </div>
-                <div class="form-group">
-                    <label asp-for="Usuario">Nombre de Usuario:</label>
-                    <input type="text" class="form-control" asp-for="Usuario"/>
-                    <label asp-for="Clave">Clave:</label>
-                    <input type="text" asp-for="Clave" class="form-control" />
-                </div>
                 <button type="submit" class="btn btn-primary">Cargar</button>
                 <button type="reset" class="btn btn-secondary">Limpiar</button>
             </form>
-            
-
         </div>
     </div>
 </div>

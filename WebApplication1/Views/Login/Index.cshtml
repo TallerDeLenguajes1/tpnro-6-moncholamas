@@ -4,27 +4,28 @@
     <link href="~/css/login.css" rel="stylesheet" />
 }
 <h1>Ingreso</h1>
-<div class="login-page">
-    
-        <form asp-action="Ingresar" asp-controller="login" method="post" asp-antiforgery="true" class="was-validated">
-          
-              
-               <div class="form-group">
-                    <label asp-for="Nombre">Nombre de Usuario:</label>
-                    <input asp-for="Nombre" type="text" id="nombre" placeholder="Nombre" />
+<div class="align-content-center container-fluid">
+    <div class="row text-center">
+        <div class="col-sm-12">
+            <form asp-action="Ingresar" asp-controller="login" method="post" class="">
+                <div class="form-group">
+                    <input class="form-control form-control-lg" asp-for="Nombre" type="text" id="nombre" placeholder="Nombre de Usuario" />
                     <span asp-validation-for="Nombre"></span>
-               </div>
-               <div class="form-group">
-                   <label asp-for="Clave">Clave: </label>
-                   <input asp-for="Clave" type="password" id="clave" placeholder="Clave" />
-                   <span asp-validation-for="Clave"></span>
-               </div>
-          
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Ingresar</button>
-                <a asp-action="" asp-controller="Usuario" class="btn btn-dark">Crear una cuenta </a>
-            </div>
+                </div>
+                <div class="form-group">
+
+                    <input class="form-control form-control-lg" asp-for="Clave" type="password" id="clave" placeholder="Clave" />
+                    <span asp-validation-for="Clave"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                    <a asp-action="" asp-controller="Usuario" class="btn btn-dark">Crear una cuenta </a>
+                </div>
             </form>
+        </div>
+    </div>
+        
 </div>
 
 

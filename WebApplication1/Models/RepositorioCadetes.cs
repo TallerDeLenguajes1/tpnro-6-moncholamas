@@ -25,7 +25,7 @@ namespace Cadeteria.Models
 
             //comando sql
             var command = conecSQL.CreateCommand();
-            command.CommandText = "Select * from Cadetes ORDER BY idCadete DESC LIMIT 3";
+            command.CommandText = "Select * from Cadetes ORDER BY idCadete DESC LIMIT 5";
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -42,41 +42,25 @@ namespace Cadeteria.Models
             return listaCadetes;
         }
 
-        public void altaCadete(Cadete cadeteN, Usuario usuarioN)
+        public void altaCadete(Cadete cadeteN)
         {
-            
-                var cadena = "Data Source= " + Path.Combine(Directory.GetCurrentDirectory(), "DB\\Cadeteria.db");
-                var conecSQL = new SQLiteConnection(cadena);
+
+                var cadena1 = "Data Source= " + Path.Combine(Directory.GetCurrentDirectory(), "DB\\Cadeteria.db");
+                var conecSQL = new SQLiteConnection(cadena1);
                 conecSQL.Open();
-
-                var command1 = conecSQL.CreateCommand();
-                command1.CommandText = "INSERT INTO Usuarios(Nombre,Password,Rol) " +
-                                      " VALUES(@N,@P,@R) ";
-
-                command1.Parameters.AddWithValue("@N", usuarioN.Nombre);
-                command1.Parameters.AddWithValue("@P", usuarioN.Clave);
-                command1.Parameters.AddWithValue("@R", 2);
-
-
-
-                command1.ExecuteNonQuery();
-                
-                var RepoU = new RepositorioUsuarios();
-                int idRol = RepoU.UltimoUsuarioCargado();
+                                
                 var command = conecSQL.CreateCommand();
-                command.CommandText = "INSERT INTO Cadetes(nombre,telefono,Direccion,IdRol) " +
-                                      " VALUES(@Nombre,@Telefono,@Direccion,@Rol) ";
 
                 command.Parameters.AddWithValue("@Nombre", cadeteN.Nombre);
                 command.Parameters.AddWithValue("@Telefono", cadeteN.Telefono);
                 command.Parameters.AddWithValue("@Direccion", cadeteN.Direccion);
-                command.Parameters.AddWithValue("@Rol", idRol);
+                command.Parameters.AddWithValue("@Rol", 2);
+                command.CommandText = "INSERT INTO Cadetes(nombre,telefono,Direccion,IdRol) " +
+                                      " VALUES(@Nombre,@Telefono,@Direccion,@Rol) ";
 
+                
                 command.ExecuteNonQuery();
                 conecSQL.Close();
-            
-            
-
             
         }
 
@@ -117,6 +101,117 @@ namespace Cadeteria.Models
             }
             conecSQL.Close();
             return cadete;
+        }
+
+        public Cadete getCadete(int id)
+        {
+            var cadete = new Cadete();
+
+            var cadena = "Data Source= " + Path.Combine(Directory.GetCurrentDirectory(), "DB\\Cadeteria.db");
+            var conecSQL = new SQLiteConnection(cadena);
+            try
+            {
+                
+                conecSQL.Open();
+
+                var command = conecSQL.CreateCommand();
+                command.Parameters.AddWithValue("@ID", id);
+                command.CommandText = "Select * from Cadetes WHERE idCadete = @ID";
+
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        cadete.IdCad = Convert.ToInt32(reader["idCadete"]);
+                        cadete.Nombre = (reader["nombre"]).ToString();
+                        cadete.Telefono = reader["telefono"].ToString();
+                        cadete.Direccion = reader["Direccion"].ToString();
+                        cadete.IdVehiculo = Convert.ToInt32(reader["IdVehiculo"]);
+                    }
+
+                    return cadete;
+                }
+                else
+                {
+                    return null;
+                }
+                
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                conecSQL.Close();
+            }
+
+            
+        }
+        public bool ModificarCadete(Cadete c)
+        {
+            var cadena = "Data Source= " + Path.Combine(Directory.GetCurrentDirectory(), "DB\\Cadeteria.db");
+            var conecSQL = new SQLiteConnection(cadena);
+            try
+            {
+                conecSQL.Open();
+               
+                //comando sql
+                var command = conecSQL.CreateCommand();
+
+                command.Parameters.AddWithValue("@Nombre", c.Nombre);
+                command.Parameters.AddWithValue("@Direccion", c.Direccion);
+                command.Parameters.AddWithValue("@Telefono", c.Telefono);
+                command.Parameters.AddWithValue("@Vehiculo", c.IdVehiculo);
+                command.Parameters.AddWithValue("@id", c.IdCad);
+
+                command.CommandText = "UPDATE Cadetes " +
+                                        "SET Nombre = @Nombre," +
+                                        "Direccion = @Direccion," +
+                                        "Telefono = @Telefono, " +
+                                        "IdVehiculo = @Vehiculo" +
+                                        " WHERE idCadete = @id;";
+
+                return command.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                conecSQL.Close();
+            }
+        }
+        public bool AsignarVehiculo(int IdC, int IdV)
+        {
+            var cadena = "Data Source= " + Path.Combine(Directory.GetCurrentDirectory(), "DB\\Cadeteria.db");
+            var conecSQL = new SQLiteConnection(cadena);
+            try
+            {
+                conecSQL.Open();
+
+                //comando sql
+                var command = conecSQL.CreateCommand();
+                                
+                command.Parameters.AddWithValue("@IdV", IdV);
+                command.Parameters.AddWithValue("@IdC", IdC);
+
+                command.CommandText = "UPDATE Cadetes " +
+                                        "SET IdVehiculo = @IdV" +
+                                        " WHERE idCadete = @IdV;";
+
+                return command.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                conecSQL.Close();
+            }
         }
     }
 }

@@ -1,21 +1,18 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Asignar Vehiculo";
 }
+
+@model Cadeteria.VIewModels.AsignarVehiculoCadeteViewModel
 
 <div class="container">
     <div class="row">
         <div class="col-3">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" asp-area="" asp-controller="Cadetes" asp-action="Index">Buscar</a>
+                    <a class="nav-link active" asp-area="" asp-controller="Cadetes" asp-action="Index">Ultimos Cargados</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Cadetes" asp-action="Alta">Nuevo Cadete</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Cadetes" asp-action="AsignarVehiculo">Asignar Vehiculo</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Cadetes" asp-action="ModificarCadete">Modificar Datos</a>
@@ -24,15 +21,23 @@
             </ul>
         </div>
         <div class="col-9">
-            <h1>Dar de alta un nuevo cadete</h1>
-
-            <form asp-controller="Cadetes" asp-action="NuevoCadete" method="post">
+            <h1>¿Qué Vehiculo va a usar @Model.Nombre?</h1>
+            <form asp-controller="Cadetes" asp-action="CargarVehiculo" method="post">
 
                 <div class="form-group">
-                    <h2>Formulario</h2>
+                    <h2>Seleccionar algun medio ya existente: </h2>
+                    
+                        <input type="text" asp-for="IdCadete" value="@Model.IdCadete" type="hidden" />
+                        <select  class="form-control" asp-for="IdVehiculo" asp-items="@(new SelectList(Model.ListaDeVehiculos,"IdVehiculo","Tipo"))">
+                        <option>
+                            - Seleccione uno -
+                        </option>    
+                        </select>
+                    
                 </div>
-                <button type="submit" class="btn btn-primary">Cargar</button>
-                <button type="reset" class="btn btn-secondary">Limpiar</button>
+                <input type="Submit" class="btn btn-primary">
+                <a asp-action="" asp-controller="" class="btn btn-secondary">Cargar un nuevo vehiculo</a>
+
             </form>
 
         </div>

@@ -35,9 +35,7 @@ namespace Cadeteria.Controllers
         [HttpPost]
         public ActionResult Ingresar(LoginViewModel us)
         {
-
-            
-
+                    
             if (ModelState.IsValid)
             {
                 Usuario usuario = _mapper.Map<Usuario>(us);
@@ -46,11 +44,16 @@ namespace Cadeteria.Controllers
                 if (UsuarioValidado!=null)
                 {
                     IniciarSesion(UsuarioValidado);
+                    return RedirectToAction("index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("index", "Login");
                 }
             }
 
-            return RedirectToAction("index", "Home");
-            
+            return RedirectToAction("index", "Login");
+
         }
 
                        

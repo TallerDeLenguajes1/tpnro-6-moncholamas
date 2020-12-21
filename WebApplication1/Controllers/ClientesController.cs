@@ -2,16 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cadeteria.Logueo;
+using Cadeteria.Models;
+using Cadeteria.VIewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadeteria.Controllers
 {
-    public class ClientesController : Controller
+    public class ClientesController : BaseController
     {
         // GET: ClientesController1
         public ActionResult Index()
         {
+            if (SesionIniciada())
+            {
+                var ReCad = new RepositorioCadetes();
+
+                var Modelo = new ClienteViewModel();
+                
+                return View(Modelo);
+            }
             return View();
         }
 

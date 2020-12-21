@@ -21,6 +21,7 @@ namespace Cadeteria.VIewModels
     }
     public class AdminCadeteViewModel 
     {
+        public int IdRol { get; set; }
         public string NombreUsuario { get; set; }
         
         public List<CadeteViewModel> ListaCadetes { get; set; }
@@ -33,10 +34,14 @@ namespace Cadeteria.VIewModels
         public string Telefono { get; set; }
         [Required]
         public string Direccion { get; set; }
+    }
+    public class AsignarVehiculoCadeteViewModel
+    {
         [Required]
-        public string Usuario { get; set; }
+        public int IdCadete { get; set; }
         [Required]
-        public string Clave { get; set; }
-
+        public int IdVehiculo { get; set; }
+        public string Nombre { get; set; }
+        public List<VehiculoViewModel> ListaDeVehiculos { get; set; }
     }
 }

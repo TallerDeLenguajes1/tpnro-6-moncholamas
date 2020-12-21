@@ -13,7 +13,7 @@ namespace Cadeteria
         public PerfilDeMapeo()
         {
             CreateMap<Cadete, CadeteViewModel>().ReverseMap();
-
+            CreateMap<Vehiculo, VehiculoViewModel>().ReverseMap();
 
             CreateMap<LoginViewModel, Usuario>()
                 //.ForMember(x => x.Clave, opt => opt.Ignore())

@@ -31,6 +31,7 @@ namespace Cadeteria.Controllers
                 List<CadeteViewModel> ListaCadVM = _mapper.Map<List<CadeteViewModel>>(listaC);
                 var Modelo = new AdminCadeteViewModel
                 {
+                    IdRol = Convert.ToInt32(HttpContext.Session.GetInt32("Rol")),
                     NombreUsuario = HttpContext.Session.GetString("Nombre"),
                     ListaCadetes = ListaCadVM
                 };
@@ -45,9 +46,8 @@ namespace Cadeteria.Controllers
             if (ModelState.IsValid)
             {
                 var cadeteDTO = _mapper.Map<AltaCadeteViewModel, Cadete>(cadete);
-                var usuarioDTO = _mapper.Map<AltaCadeteViewModel,Usuario>(cadete);
                 RepositorioCadetes ReCad = new RepositorioCadetes();
-                ReCad.altaCadete(cadeteDTO,usuarioDTO);
+                ReCad.altaCadete(cadeteDTO);
                 return Redirect("index");
             }
             return Redirect("Alta");
@@ -60,9 +60,13 @@ namespace Cadeteria.Controllers
         }
         public ActionResult Borrar(int id)
         {
-            RepositorioCadetes ReCad = new RepositorioCadetes();
-            ReCad.borrarCadete(id);
-            return View();
+            if (SesionIniciada())
+            {
+                RepositorioCadetes ReCad = new RepositorioCadetes();
+                ReCad.borrarCadete(id);
+                return RedirectToAction("index");
+            }
+            return RedirectToAction("index","Home");
         }
 
         public ActionResult ModificarCadete(int id)
@@ -72,18 +76,51 @@ namespace Cadeteria.Controllers
             return View();
         }
 
-        
-        public ActionResult AsignarVehiculo()
+        [HttpGet]
+        [Route("/Cadete/AsignarVehiculo/{id}")]
+        public ActionResult AsignarVehiculo(int id)
         {
-           
-                return View();
-            
+            var repoCad = new RepositorioCadetes();
+            var cadeteDTO = repoCad.getCadete(id);
+            if (SesionIniciada()&& cadeteDTO!=null) {
+                // selecciono el cadete a asignarle el Vehiculo
+                
+                var CadeteVM = new CadeteViewModel();
+                CadeteVM = _mapper.Map<Cadete, CadeteViewModel>(cadeteDTO);
+
+                //traigo la lista de Vehiculos
+                var repoVehi = new RepositorioVehiculos();
+                var listaVehiDTO = repoVehi.getAll();
+                var ListaVehVM = new List<VehiculoViewModel>();
+                ListaVehVM = _mapper.Map<List<Vehiculo>, List<VehiculoViewModel>>(listaVehiDTO);
+
+                var AsigCadVM = new AsignarVehiculoCadeteViewModel()
+                {
+                    Nombre = CadeteVM.Nombre,
+                    IdCadete = CadeteVM.IdCad,
+                    ListaDeVehiculos = ListaVehVM
+                };
+                return View(AsigCadVM);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
-        // GET: CadetesController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPost]
+        public ActionResult CargarVehiculo(AsignarVehiculoCadeteViewModel AsigValC)
         {
-            return View();
+            if (SesionIniciada())
+            {
+                if (ModelState.IsValid)
+                {
+                    var repoCad = new RepositorioCadetes();
+                    
+                    repoCad.AsignarVehiculo(AsigValC.IdCadete, AsigValC.IdVehiculo);
+                    return RedirectToAction("index", "Cadetes");
+                }
+                
+            }
+            return RedirectToAction("index","Home");
         }
 
         // POST: CadetesController/Edit/5

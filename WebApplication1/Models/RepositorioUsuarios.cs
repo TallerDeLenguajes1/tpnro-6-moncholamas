@@ -95,6 +95,29 @@ namespace Cadeteria.Models
 
 
         }
+        public int AltaUsuario(Usuario usuarioN)
+        {
+            int IdUsuario=0;
+            var cadena = "Data Source= " + Path.Combine(Directory.GetCurrentDirectory(), "DB\\Cadeteria.db");
+            var conecSQL = new SQLiteConnection(cadena);
+            conecSQL.Open();
+
+            var command1 = conecSQL.CreateCommand();
+            command1.Parameters.AddWithValue("@N", usuarioN.Nombre);
+            command1.Parameters.AddWithValue("@P", usuarioN.Clave);
+            command1.Parameters.AddWithValue("@R", 2);
+
+            command1.CommandText = "INSERT INTO Usuarios(Nombre,Password,Rol) " +
+                                  " VALUES(@N,@P,@R) ";
+
+            var res = command1.ExecuteNonQuery();
+            if (res > 0)
+            {
+                IdUsuario = UltimoUsuarioCargado();
+            }
+            conecSQL.Close();
+            return IdUsuario;
+        }
 
     }
 }
